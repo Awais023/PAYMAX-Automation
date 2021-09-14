@@ -15,13 +15,16 @@ public class TC01_merchantLoginSteps {
 
 	@Then("^PAYMAX Merchant Portal has been opened\\.$")
 	public void paymax_Merchant_Portal_has_been_opened() throws Throwable {
+		login_.launchZPGMerchantPortal();
 	}
 
 	@Then("^PAYMAX Merchant enters credentials of username and password as Merchant$")
 	public void paymax_Merchant_enters_credentials_of_username_and_password_as_Merchant() throws Throwable {
+		login_.merchantCredentials();
 	}
 
 	@Then("^PAYMAX Merchant clicks on Go Button, Merchant Portal must be opened\\.$")
 	public void paymax_Merchant_clicks_on_Go_Button_Merchant_Portal_must_be_opened() throws Throwable {
+		login_.merchantLogin();
 	}
 }
