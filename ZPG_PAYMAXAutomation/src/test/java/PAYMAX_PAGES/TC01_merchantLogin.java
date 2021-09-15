@@ -22,6 +22,10 @@ public class TC01_merchantLogin {
 	@FindBy(how = How.ID, using = "loginForm:j_id793557914_2f4cba79")
 	public WebElement merchantLoginBtn;
 	
+	@FindBy(how = How.ID, using = "screenTitle")
+	public WebElement merchantPortalWelcomeMsg;
+	
+	
 
 	public void launchBrowser() throws Throwable {
 		try {
@@ -63,6 +67,10 @@ public class TC01_merchantLogin {
 		try {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			login.merchantLoginBtn.click();
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			driver.switchTo().frame("applicationContent");
+			String welcome =  login.merchantPortalWelcomeMsg.getText();
+			System.out.print(welcome);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
