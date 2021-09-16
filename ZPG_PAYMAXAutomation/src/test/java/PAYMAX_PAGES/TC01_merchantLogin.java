@@ -73,7 +73,7 @@ public class TC01_merchantLogin {
 
 		try {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			driver.get("http://172.26.58.54:9081/paymax-merchant/faces/pg/site/Login.jsf");
+			driver.get("http://192.168.154.188:9081/paymax-merchant/faces/pg/site/Login.jsf");
 			driver.manage().window().maximize();
 			test = extent.createTest("Step-2-Launch PAYMAX Merchant Portal ")
 					.pass(MarkupHelper.createLabel("PAYMAX Merchant Portal has been Launching.", ExtentColor.GREEN));
@@ -90,8 +90,8 @@ public class TC01_merchantLogin {
 
 		try {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			login.merchantEmail.sendKeys("mfarhan9@paymax.com");
-			login.merchantPassword.sendKeys("Pakistan#000");
+			login.merchantEmail.sendKeys("sarim@yahoo.com");
+			login.merchantPassword.sendKeys("System@1234");
 			test = extent.createTest("Step-3-Enter Merchant Credentials")
 					.pass(MarkupHelper.createLabel("PAYMAX Merchant has entered its credentials Username and Password.", ExtentColor.GREEN));
 		} catch (Exception e) {
