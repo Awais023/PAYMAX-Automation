@@ -1,5 +1,11 @@
 package PAYMAX_PAGES;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
@@ -37,10 +43,29 @@ public class TC01_merchantLogin {
 	public static ExtentReports extent;
 	public static ExtentTest test;
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public static Properties property;
+	public static String configPath = "Configuration/configSettings.properties";
+
+	public static void initializeProperties() {
+		property = new Properties();
+		try {
+			InputStream input = new FileInputStream(configPath);
+			property.load(input);
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	public void setExtent() throws Throwable {
 		try {
 			extent = new ExtentReports();
-			spark = new ExtentSparkReporter("./reports/Spark.html");
+			spark = new ExtentSparkReporter(property.getProperty("extentReportPath"));
 			spark.config().setEncoding("utf-8");
 			spark.config().setDocumentTitle("Automation Report");
 			spark.config().setReportName("Automation Test Resuts");
@@ -53,18 +78,23 @@ public class TC01_merchantLogin {
 
 	public void launchBrowser() throws Throwable {
 		try {
-			System.setProperty("webdriver.chrome.driver",
-					"C:/Users/awais.sultan/git/PAYMAX/ZPG_PAYMAXAutomation/googleChromeDriver/chromedriver.exe");
+			String filename = property.getProperty("driverName");
+			String folderName_ = "googleChromeDriver";
+			String directory = System.getProperty("user.dir");
+			String path = "";
+			path = directory + File.separator + folderName_ + File.separator + filename;
+			System.setProperty(property.getProperty("browserPath"), path);
 			driver = new ChromeDriver();
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			login = PageFactory.initElements(driver, TC01_merchantLogin.class);
-			test = extent.createTest("Step-1-Launch Browser")
-					.pass(MarkupHelper.createLabel("Chrome Driver has been Launching.", ExtentColor.GREEN));
-			test.pass(MarkupHelper.createLabel("Chromer Driver has been launched Successfully.", ExtentColor.GREEN));
+			test = extent.createTest("TC-1-Launch Google Chrome Browser")
+					.pass(MarkupHelper.createLabel("Google Chrome Driver has been Launching.", ExtentColor.GREEN));
+			test.pass(MarkupHelper.createLabel("Google Chromer Driver has been launched Successfully.",
+					ExtentColor.GREEN));
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("Step-1-Launch Browser")
-			.fail(MarkupHelper.createLabel("Chrome Driver has been Launching", ExtentColor.RED));
+			extent.createTest("TC-1-Launch Google Chrome Browser").fail(MarkupHelper
+					.createLabel("Google Chrome Driver has not been Launched Successfuly!.", ExtentColor.RED));
 			extent.flush();
 		}
 	}
@@ -73,15 +103,16 @@ public class TC01_merchantLogin {
 
 		try {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			driver.get("http://172.26.58.54:9081/paymax-merchant/faces/pg/site/Login.jsf");
+			driver.get(property.getProperty("AppURL"));
 			driver.manage().window().maximize();
-			test = extent.createTest("Step-2-Launch PAYMAX Merchant Portal ")
+			test = extent.createTest("TC-2-Launch PAYMAX Merchant Portal ")
 					.pass(MarkupHelper.createLabel("PAYMAX Merchant Portal has been Launching.", ExtentColor.GREEN));
-			test.pass(MarkupHelper.createLabel("PAYMAX Merchant Portal has been launched Successfully.", ExtentColor.GREEN));
+			test.pass(MarkupHelper.createLabel("PAYMAX Merchant Portal has been launched Successfully.",
+					ExtentColor.GREEN));
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("Step-2-Launch PAYMAX Merchant Portal")
-			.fail(MarkupHelper.createLabel("PAYMAX Merchant Portal has not been launched Successfully.", ExtentColor.RED));
+			extent.createTest("TC-2-Launch PAYMAX Merchant Portal").fail(MarkupHelper
+					.createLabel("PAYMAX Merchant Portal has not been launched Successfully.", ExtentColor.RED));
 			extent.flush();
 		}
 	}
@@ -90,14 +121,14 @@ public class TC01_merchantLogin {
 
 		try {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			login.merchantEmail.sendKeys("mfarhan9@paymax.com");
-			login.merchantPassword.sendKeys("Pakistan#000");
-			test = extent.createTest("Step-3-Enter Merchant Credentials")
-					.pass(MarkupHelper.createLabel("PAYMAX Merchant has entered its credentials Username and Password.", ExtentColor.GREEN));
+			login.merchantEmail.sendKeys(property.getProperty("merchantUsername"));
+			login.merchantPassword.sendKeys(property.getProperty("password"));
+			test = extent.createTest("TC-3-Enter Merchant Credentials").pass(MarkupHelper.createLabel(
+					"PAYMAX Merchant has entered its credentials Username and Password.", ExtentColor.GREEN));
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("Step-3-Enter Merchant Credentials")
-			.fail(MarkupHelper.createLabel("Error Occurs while entering PAYMAX Merchant credentials Username and Password.", ExtentColor.RED));
+			extent.createTest("TC-3-Enter Merchant Credentials").fail(MarkupHelper.createLabel(
+					"Error Occurs while entering PAYMAX Merchant credentials Username and Password.", ExtentColor.RED));
 			extent.flush();
 		}
 	}
@@ -111,14 +142,14 @@ public class TC01_merchantLogin {
 			driver.switchTo().frame("applicationContent");
 			String welcome = login.merchantPortalWelcomeMsg.getText();
 			System.out.print(welcome);
-			test = extent.createTest("Step-4-Merchant Login")
+			test = extent.createTest("TC-4-Merchant Login")
 					.pass(MarkupHelper.createLabel("Merchant has been successfully logged in.", ExtentColor.GREEN));
 			test.pass(MarkupHelper.createLabel(welcome, ExtentColor.GREEN));
 			extent.flush();
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("Step-4-Merchant Login")
-			.fail(MarkupHelper.createLabel("Merchant has not been successfully logged in.", ExtentColor.RED));
+			extent.createTest("TC-4-Merchant Login")
+					.fail(MarkupHelper.createLabel("Merchant has not been successfully logged in.", ExtentColor.RED));
 			extent.flush();
 		}
 	}
