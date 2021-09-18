@@ -10,6 +10,7 @@ public class TC01_merchantLoginSteps {
 
 	@Given("^Chrome Browser has been launched for PAYMAX\\.$")
 	public void chrome_Browser_has_been_launched_for_PAYMAX() throws Throwable {
+		TC01_merchantLogin.initializeProperties();
 		login_.setExtent();
 		login_.launchBrowser();	
 	}
