@@ -42,14 +42,14 @@ public class TC03_TransactionHistoryPreferences extends TC01_merchantLogin {
 			driver.switchTo().defaultContent();
 			TrxHstryPrefer.clickConfigurations.click();
 			TrxHstryPrefer.clickTransactionHistoryPreferences.click();
-			test = extent.createTest("TC9-Transaction History Preference Screen ").pass(MarkupHelper
+			test = extent.createTest("TC-9-Transaction History Preference Screen ").pass(MarkupHelper
 					.createLabel("Transaction History Preference Screen has been opening.", ExtentColor.GREEN));
 			test.pass(MarkupHelper.createLabel("Transaction History Preference Screen has been Opened",
 					ExtentColor.GREEN));
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("Step5-ransaction History Preference Screen ").fail(MarkupHelper
-					.createLabel("ransaction History Preference Screen has not been Opened", ExtentColor.RED));
+			extent.createTest("TC-9-Transaction History Preference Screen ").fail(MarkupHelper
+					.createLabel("Transaction History Preference Screen has not been Opened", ExtentColor.RED));
 			extent.flush();
 		}
 	}
@@ -62,14 +62,15 @@ public class TC03_TransactionHistoryPreferences extends TC01_merchantLogin {
 			TrxHstryPrefer.clickTransactionHistoryPreferencesfield.click();
 			TrxHstryPrefer.clickTransactionHistoryPreferencesFieldUpdate.click();
 			TrxHstryPrefer.updateTransactionHistoryPreferences.click();
-			test = extent.createTest("TC10-ransaction History Preference Screen Screen ").pass(MarkupHelper
-					.createLabel("ransaction History Preference Screen has been opening.", ExtentColor.GREEN));
-			test.pass(MarkupHelper.createLabel("ransaction History Preference Screen has been Opened",
+			test = extent.createTest("TC-10-Update Transaction History Preference Screen ").pass(MarkupHelper
+					.createLabel("Transaction History Preference Screen has been updating.", ExtentColor.GREEN));
+			test.pass(MarkupHelper.createLabel("Transaction History Preference Screen has been Updated",
 					ExtentColor.GREEN));
+			extent.flush();
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("TC11-ransaction History Preference Screen ").fail(MarkupHelper
-					.createLabel("ransaction History Preference Screen has not been Opened", ExtentColor.RED));
+			extent.createTest("TC-10-Transaction History Preference Screen ").fail(MarkupHelper
+					.createLabel("Transaction History Preference Screen has not been Updated", ExtentColor.RED));
 			extent.flush();
 		}
 	}
@@ -83,15 +84,15 @@ public class TC03_TransactionHistoryPreferences extends TC01_merchantLogin {
 			TrxHstryPrefer.clickTransactionHistoryPreferencesFieldUpdate.click();
 			TrxHstryPrefer.resetTransactionHistoryPreferences.click();
 			TrxHstryPrefer.yesResetTransactionHistoryPreferences.click();
-			test = extent.createTest("TC10-ransaction History Preference Screen Screen ").pass(MarkupHelper
-					.createLabel("ransaction History Preference Screen has been opening.", ExtentColor.GREEN));
-			test.pass(MarkupHelper.createLabel("ransaction History Preference Screen has been Opened",
+			test = extent.createTest("TC-11-RESET Transaction History Preference Screen ").pass(MarkupHelper
+					.createLabel("Transaction History Preference Screen has been resetting.", ExtentColor.GREEN));
+			test.pass(MarkupHelper.createLabel("Transaction History Preference Screen has been RESET",
 					ExtentColor.GREEN));
 			extent.flush();
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("TC11-ransaction History Preference Screen ").fail(MarkupHelper
-					.createLabel("ransaction History Preference Screen has not been Opened", ExtentColor.RED));
+			extent.createTest("TC-11-Transaction History Preference Screen ").fail(MarkupHelper
+					.createLabel("Transaction History Preference Screen has not been RESET", ExtentColor.RED));
 			extent.flush();
 		}
 	}

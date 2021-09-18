@@ -20,7 +20,7 @@ Scenario: Verify Merchant is able to login
 	Then User enter some data in fields and clicks on reset Button.
 	
 @exportTransactionHistory
-Scenario: Verify Merchant is able to login
+Scenario: Verify Merchant is able to login 
 	Given Chrome Browser has been launched for PAYMAX. 
 	Then PAYMAX Merchant Portal has been opened.
 	Then PAYMAX Merchant enters credentials of username and password as Merchant
