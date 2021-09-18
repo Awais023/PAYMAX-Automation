@@ -103,11 +103,7 @@ public class TC01_merchantLogin {
 
 		try {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-<<<<<<< HEAD
-			driver.get("http://192.168.154.188:9081/paymax-merchant/faces/pg/site/Login.jsf");
-=======
 			driver.get(property.getProperty("AppURL"));
->>>>>>> merchantLogin
 			driver.manage().window().maximize();
 			test = extent.createTest("TC-2-Launch PAYMAX Merchant Portal ")
 					.pass(MarkupHelper.createLabel("PAYMAX Merchant Portal has been Launching.", ExtentColor.GREEN));
