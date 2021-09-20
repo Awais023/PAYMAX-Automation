@@ -31,9 +31,10 @@ public class TC03_TransactionHistoryPreferences extends TC01_merchantLogin {
 
 	@FindBy(how = How.ID, using = "addFilterForm:j_id2062127003_7ae98dcd")
 	public WebElement resetTransactionHistoryPreferences;
-	
+
 	@FindBy(how = How.ID, using = "addFilterForm:j_id2062127003_7ae98e60")
 	public WebElement yesResetTransactionHistoryPreferences;
+	
 
 	public void openTransactionHistoryPreferencesScreen() throws Throwable {
 		try {
@@ -74,7 +75,7 @@ public class TC03_TransactionHistoryPreferences extends TC01_merchantLogin {
 			extent.flush();
 		}
 	}
-	
+
 	public void resetTransactionHistoryPreferencesScreen() throws Throwable {
 		try {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
