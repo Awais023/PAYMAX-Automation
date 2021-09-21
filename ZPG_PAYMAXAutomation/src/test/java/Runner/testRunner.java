@@ -9,7 +9,7 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(
 features = "src/test/resources/Features"
 ,glue= {"PAYMAX_Test"}
-,tags= {"@resetMerchantUser"}
+,tags= {"@uploadPublicKeyConfiguration"}
 )
 public class testRunner {
 
