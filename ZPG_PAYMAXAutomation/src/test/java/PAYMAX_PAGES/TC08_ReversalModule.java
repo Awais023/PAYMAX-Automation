@@ -83,7 +83,7 @@ public class TC08_ReversalModule extends TC01_merchantLogin {
 			System.out.println(e);
 			
 			extent.createTest("TC-37-Uplaod Reversal File")
-					.fail(MarkupHelper.createLabel("Reversal file has been uploaded : "+error_, ExtentColor.RED));
+					.fail(MarkupHelper.createLabel("Reversal file has been uploaded : ", ExtentColor.RED));
 			extent.flush();
 		}
 	}

@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,6 +23,7 @@ import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import com.sun.tools.sjavac.Log;
 
 public class TC01_merchantLogin {
 	public static WebDriver driver;
@@ -37,6 +40,9 @@ public class TC01_merchantLogin {
 
 	@FindBy(how = How.ID, using = "screenTitle")
 	public WebElement merchantPortalWelcomeMsg;
+
+	@FindBy(how = How.ID, using = "loginForm:errorMessages_body")
+	public WebElement invalidCredentialsError;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static ExtentSparkReporter spark;
@@ -88,13 +94,13 @@ public class TC01_merchantLogin {
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			login = PageFactory.initElements(driver, TC01_merchantLogin.class);
 			test = extent.createTest("TC-1-Launch Google Chrome Browser")
-					.pass(MarkupHelper.createLabel("Google Chrome Driver has been Launching.", ExtentColor.GREEN));
-			test.pass(MarkupHelper.createLabel("Google Chromer Driver has been launched Successfully.",
+					.pass(MarkupHelper.createLabel("Google Chrome Browser has been Launching.", ExtentColor.GREEN));
+			test.pass(MarkupHelper.createLabel("Google Chromer Browser has been launched Successfully.",
 					ExtentColor.GREEN));
 		} catch (Exception e) {
 			System.out.println(e);
 			extent.createTest("TC-1-Launch Google Chrome Browser").fail(MarkupHelper
-					.createLabel("Google Chrome Driver has not been Launched Successfuly!.", ExtentColor.RED));
+					.createLabel("Google Chrome Browser has not been Launched Successfuly!.", ExtentColor.RED));
 			extent.flush();
 		}
 	}
@@ -117,38 +123,100 @@ public class TC01_merchantLogin {
 		}
 	}
 
+	public static boolean emailValidation(String email) {
+		String emailRegex = "^(.+)@(.+)$";
+		Pattern pat = Pattern.compile(emailRegex);
+		if (email == null)
+			return false;
+		return pat.matcher(email).matches();
+	}
+
 	public void merchantCredentials() throws Throwable {
 
-		try {
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		if (emailValidation(property.getProperty("merchantUsername"))) {
 			login.merchantEmail.sendKeys(property.getProperty("merchantUsername"));
 			login.merchantPassword.sendKeys(property.getProperty("password"));
 			test = extent.createTest("TC-3-Enter Merchant Credentials").pass(MarkupHelper.createLabel(
-					"PAYMAX Merchant has entered its credentials Username and Password.", ExtentColor.GREEN));
+					"PAYMAX Merchant has entered its valid credentials Username and Password.", ExtentColor.GREEN));
+		} else {
+			test = extent.createTest("TC-3-Enter Merchant Credentials").fail(MarkupHelper.createLabel(
+					"Error Occurs while entering PAYMAX Merchant credentials Username and Password.", ExtentColor.RED));
+			test.fail(MarkupHelper.createLabel("Email is not valid format.", ExtentColor.RED));
+			extent.flush();
+		}
+	}
+
+	public void invalidMerchantCredentials() throws Throwable {
+
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		try {
+			if (emailValidation(property.getProperty("invalidUsername"))) {
+				login.merchantEmail.sendKeys(property.getProperty("invalidUsername"));
+				login.merchantPassword.sendKeys(property.getProperty("invalidPassword"));
+				test = extent.createTest("TC-4-Enter Invalid Merchant Credentials").pass(MarkupHelper.createLabel(
+						"PAYMAX Merchant has entered its credentials Username and Password.", ExtentColor.GREEN));
+			} else {
+				test = extent.createTest("TC-4-Enter Invalid Merchant Credentials")
+						.fail(MarkupHelper.createLabel(
+								"Error Occurs while entering PAYMAX Merchant credentials Username and Password.",
+								ExtentColor.RED));
+				test.fail(MarkupHelper.createLabel("Email is not valid format.", ExtentColor.RED));
+				extent.flush();
+			}
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("TC-3-Enter Merchant Credentials").fail(MarkupHelper.createLabel(
-					"Error Occurs while entering PAYMAX Merchant credentials Username and Password.", ExtentColor.RED));
+			extent.createTest("TC-4-Enter Invalid Merchant Credentials")
+					.fail(MarkupHelper.createLabel("Invalid Merchant Credentials.", ExtentColor.RED));
 			extent.flush();
 		}
 	}
 
 	public void merchantLogin() throws Throwable {
-
 		try {
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			login.merchantLoginBtn.click();
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			driver.switchTo().frame("applicationContent");
-			String welcome = login.merchantPortalWelcomeMsg.getText();
-			System.out.print(welcome);
-			test = extent.createTest("TC-4-Merchant Login")
-					.pass(MarkupHelper.createLabel("Merchant has been successfully logged in.", ExtentColor.GREEN));
-			test.pass(MarkupHelper.createLabel(welcome, ExtentColor.GREEN));
-			extent.flush();
+			if (emailValidation(property.getProperty("merchantUsername"))) {
+				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+				login.merchantLoginBtn.click();
+				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+				driver.switchTo().frame("applicationContent");
+				String welcome = login.merchantPortalWelcomeMsg.getText();
+				System.out.print(welcome);
+				test = extent.createTest("TC-5-Merchant Login")
+						.pass(MarkupHelper.createLabel("Merchant has been successfully logged in.", ExtentColor.GREEN));
+				test.pass(MarkupHelper.createLabel(welcome, ExtentColor.GREEN));
+				extent.flush();
+			} else {
+				test = extent.createTest("TC-5-Merchant Login")
+						.fail(MarkupHelper.createLabel("Merchant Email format is not correct.", ExtentColor.RED));
+				extent.flush();
+			}
 		} catch (Exception e) {
-			System.out.println(e);
-			extent.createTest("TC-4-Merchant Login")
+			System.out.print(e);
+			test = extent.createTest("TC-5-Merchant Login")
+					.fail(MarkupHelper.createLabel("Merchant has not been successfully logged in.", ExtentColor.RED));
+			extent.flush();
+		}
+	}
+
+	public void invalidMerchantLogin() throws Throwable {
+		try {
+			if (emailValidation(property.getProperty("invalidUsername"))) {
+				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+				login.merchantLoginBtn.click();
+				String error = login.invalidCredentialsError.getText();
+				System.out.print(error);
+				test = extent.createTest("TC-5-Merchant Login").fail(
+						MarkupHelper.createLabel("Merchant has not been successfully logged in.", ExtentColor.RED));
+				test.fail(MarkupHelper.createLabel(error, ExtentColor.RED));
+				extent.flush();
+			} else {
+				test = extent.createTest("TC-5-Merchant Login")
+						.fail(MarkupHelper.createLabel("Merchant Email format is not correct.", ExtentColor.RED));
+				extent.flush();
+			}
+		} catch (Exception e) {
+			System.out.print(e);
+			test = extent.createTest("TC-5-Merchant Login")
 					.fail(MarkupHelper.createLabel("Merchant has not been successfully logged in.", ExtentColor.RED));
 			extent.flush();
 		}

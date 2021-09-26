@@ -5,14 +5,14 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 
 public class TC01_merchantLoginSteps {
-	
+
 	TC01_merchantLogin login_ = new TC01_merchantLogin();
 
 	@Given("^Chrome Browser has been launched for PAYMAX\\.$")
 	public void chrome_Browser_has_been_launched_for_PAYMAX() throws Throwable {
 		TC01_merchantLogin.initializeProperties();
 		login_.setExtent();
-		login_.launchBrowser();	
+		login_.launchBrowser();
 	}
 
 	@Then("^PAYMAX Merchant Portal has been opened\\.$")
@@ -25,8 +25,18 @@ public class TC01_merchantLoginSteps {
 		login_.merchantCredentials();
 	}
 
+	@Then("^PAYMAX Merchant enters invalid credentials of username and password as Merchant$")
+	public void paymax_Merchant_enters_invalid_credentials_of_username_and_password_as_Merchant() throws Throwable {
+		login_.invalidMerchantCredentials();
+	}
+
 	@Then("^PAYMAX Merchant clicks on Go Button, Merchant Portal must be opened\\.$")
 	public void paymax_Merchant_clicks_on_Go_Button_Merchant_Portal_must_be_opened() throws Throwable {
 		login_.merchantLogin();
+	}
+
+	@Then("^PAYMAX Merchant clicks on Go Button, Invalid Credentials error must appears\\.$")
+	public void paymax_Merchant_clicks_on_Go_Button_Invalid_Credentials_error_must_appears() throws Throwable {
+		login_.invalidMerchantLogin();
 	}
 }
