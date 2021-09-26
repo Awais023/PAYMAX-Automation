@@ -7,3 +7,10 @@ Scenario: Verify Merchant is able to login
 	Then PAYMAX Merchant Portal has been opened.
 	Then PAYMAX Merchant enters credentials of username and password as Merchant
 	Then PAYMAX Merchant clicks on Go Button, Merchant Portal must be opened.
+	
+@InvalidMerchantLogin
+Scenario: Verify Merchant is able to login
+	Given Chrome Browser has been launched for PAYMAX. 
+	Then PAYMAX Merchant Portal has been opened.
+	Then PAYMAX Merchant enters invalid credentials of username and password as Merchant
+	Then PAYMAX Merchant clicks on Go Button, Invalid Credentials error must appears.
