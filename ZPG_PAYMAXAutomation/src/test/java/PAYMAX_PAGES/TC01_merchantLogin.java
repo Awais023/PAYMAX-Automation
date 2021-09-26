@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -23,7 +25,6 @@ import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import com.sun.tools.sjavac.Log;
 
 public class TC01_merchantLogin {
 	public static WebDriver driver;
@@ -82,6 +83,15 @@ public class TC01_merchantLogin {
 		}
 	}
 
+	public static String capture(WebDriver driver_, String screenShotName) throws IOException {
+		TakesScreenshot ts = (TakesScreenshot) driver;
+		File source = ts.getScreenshotAs(OutputType.FILE);
+		String dest = System.getProperty("user.dir") + "/ErrorScreenshots/" + screenShotName + ".png";
+		File destination = new File(dest);
+		FileUtils.copyFile(source, destination);
+		return dest;
+	}
+	
 	public void launchBrowser() throws Throwable {
 		try {
 			String filename = property.getProperty("driverName");
@@ -179,11 +189,13 @@ public class TC01_merchantLogin {
 				login.merchantLoginBtn.click();
 				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 				driver.switchTo().frame("applicationContent");
+				String screenShotPath = capture(driver, "Merchant Login");
 				String welcome = login.merchantPortalWelcomeMsg.getText();
 				System.out.print(welcome);
 				test = extent.createTest("TC-5-Merchant Login")
 						.pass(MarkupHelper.createLabel("Merchant has been successfully logged in.", ExtentColor.GREEN));
 				test.pass(MarkupHelper.createLabel(welcome, ExtentColor.GREEN));
+				test.addScreenCaptureFromPath(screenShotPath);
 				extent.flush();
 			} else {
 				test = extent.createTest("TC-5-Merchant Login")
@@ -205,9 +217,11 @@ public class TC01_merchantLogin {
 				login.merchantLoginBtn.click();
 				String error = login.invalidCredentialsError.getText();
 				System.out.print(error);
+				String screenShotPath = capture(driver, "Merchant Login");
 				test = extent.createTest("TC-5-Merchant Login").fail(
 						MarkupHelper.createLabel("Merchant has not been successfully logged in.", ExtentColor.RED));
 				test.fail(MarkupHelper.createLabel(error, ExtentColor.RED));
+				test.addScreenCaptureFromPath(screenShotPath);
 				extent.flush();
 			} else {
 				test = extent.createTest("TC-5-Merchant Login")

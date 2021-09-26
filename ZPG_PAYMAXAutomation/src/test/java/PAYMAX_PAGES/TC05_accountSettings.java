@@ -81,12 +81,14 @@ public class TC05_accountSettings extends TC01_merchantLogin {
 			driver.switchTo().defaultContent();
 			accSettngs_.clickAccountSettings.click();
 			accSettngs_.clickChangePassword.click();
-			test = extent.createTest("TC-15-Open Change Password Screen ")
+			test = extent.createTest("TC-18-Open Change Password Screen ")
 					.pass(MarkupHelper.createLabel("Change Password has been opening.", ExtentColor.GREEN));
 			test.pass(MarkupHelper.createLabel("Change Password Screen has been Opened", ExtentColor.GREEN));
+			String screenShotPath__ = capture(driver, "Open Change Password");
+			test.addScreenCaptureFromPath(screenShotPath__);
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("TC-15-Open Change Password Screen ")
+			extent.createTest("TC-18-Open Change Password Screen ")
 					.fail(MarkupHelper.createLabel("Change Password Screen has not been Opened", ExtentColor.RED));
 			extent.flush();
 		}
@@ -102,18 +104,20 @@ public class TC05_accountSettings extends TC01_merchantLogin {
 			accSettngs_.confirmPwd.sendKeys(property.getProperty("confirmPassword"));
 			accSettngs_.changePwd.click();
 			if (accSettngs_.successMsgPwdChange.isDisplayed()) {
-				test = extent.createTest("TC-16-Change Merchant Password")
+				test = extent.createTest("TC-19-Change Merchant Password")
 						.pass(MarkupHelper.createLabel("Merchant password has been changing.", ExtentColor.GREEN));
 				test.pass(MarkupHelper.createLabel("Merchant password has been changed", ExtentColor.GREEN));
+				String screenShotPath__ = capture(driver, "Changed Password");
+				test.addScreenCaptureFromPath(screenShotPath__);
 				extent.flush();
 			} else {
-				extent.createTest("TC-16-Change Merchant Password")
+				extent.createTest("TC-19-Change Merchant Password")
 						.fail(MarkupHelper.createLabel("Merchant password has not been changing.", ExtentColor.RED));
 				extent.flush();
 			}
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("TC-16-Change Merchant Password")
+			extent.createTest("TC-19-Change Merchant Password")
 					.fail(MarkupHelper.createLabel("Merchant password has not been changing.", ExtentColor.RED));
 			extent.flush();
 		}
@@ -126,12 +130,14 @@ public class TC05_accountSettings extends TC01_merchantLogin {
 			driver.switchTo().defaultContent();
 			accSettngs_.clickAccountSettings.click();
 			accSettngs_.clickIPNConfig_.click();
-			test = extent.createTest("TC-17-Open IPN Configuration Screen ")
+			test = extent.createTest("TC-20-Open IPN Configuration Screen ")
 					.pass(MarkupHelper.createLabel("IPN Configuration has been opening.", ExtentColor.GREEN));
 			test.pass(MarkupHelper.createLabel("IPN Configuration Screen has been Opened", ExtentColor.GREEN));
+			String screenShotPath__ = capture(driver, "Open IPN Config");
+			test.addScreenCaptureFromPath(screenShotPath__);
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("TC-17-Open IPN Configuration Screen ")
+			extent.createTest("TC-20-Open IPN Configuration Screen ")
 					.fail(MarkupHelper.createLabel("IPN Configuration Screen has not been Opened", ExtentColor.RED));
 			extent.flush();
 		}
@@ -148,19 +154,21 @@ public class TC05_accountSettings extends TC01_merchantLogin {
 			accSettngs_.moveIPNPaarmeter.click();
 			accSettngs_.saveIPN.click();
 			if (accSettngs_.successMsgSaveIPN.isDisplayed()) {
-				test = extent.createTest("TC-18-Save IPN Configurations ")
+				test = extent.createTest("TC-21-Save IPN Configurations ")
 						.pass(MarkupHelper.createLabel("IPN Configurations has been saving.", ExtentColor.GREEN));
 				test.pass(MarkupHelper.createLabel("IPN Configurations has been saved", ExtentColor.GREEN));
+				String screenShotPath__ = capture(driver, "save IPN");
+				test.addScreenCaptureFromPath(screenShotPath__);
 				extent.flush();
 			} else {
-				extent.createTest("TC-18-Save IPN Configurations ")
-						.fail(MarkupHelper.createLabel("IPN Configurations has not been Opened", ExtentColor.RED));
+				extent.createTest("TC-21-Save IPN Configurations ")
+						.fail(MarkupHelper.createLabel("IPN Configurations has not been Saved", ExtentColor.RED));
 				extent.flush();
 			}
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("TC-18-Save IPN Configurations ")
-					.fail(MarkupHelper.createLabel("IPN Configurations has not been Opened", ExtentColor.RED));
+			extent.createTest("TC-21-Save IPN Configurations ")
+					.fail(MarkupHelper.createLabel("IPN Configurations has not been Saved", ExtentColor.RED));
 			extent.flush();
 		}
 	}
@@ -172,12 +180,14 @@ public class TC05_accountSettings extends TC01_merchantLogin {
 			driver.switchTo().defaultContent();
 			accSettngs_.clickAccountSettings.click();
 			accSettngs_.openGenerateHashKey.click();
-			test = extent.createTest("TC-19-Open Generate Hash Key Screen ")
+			test = extent.createTest("TC-22-Open Generate Hash Key Screen ")
 					.pass(MarkupHelper.createLabel("Generate Hash Key has been opening.", ExtentColor.GREEN));
 			test.pass(MarkupHelper.createLabel("Generate Hash Key Screen has been Opened", ExtentColor.GREEN));
+			String screenShotPath__ = capture(driver, "Open Generate Hash key");
+			test.addScreenCaptureFromPath(screenShotPath__);
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("TC-19-Open Generate Hash Key Screen ")
+			extent.createTest("TC-22-Open Generate Hash Key Screen ")
 					.fail(MarkupHelper.createLabel("Generate Hash Key Screen has not been Opened", ExtentColor.RED));
 			extent.flush();
 		}
@@ -190,13 +200,15 @@ public class TC05_accountSettings extends TC01_merchantLogin {
 			driver.switchTo().frame("applicationContent");
 			if (accSettngs_.hashKey.getAttribute("value") != null) {
 				String hashKey_ = accSettngs_.hashKey.getAttribute("value");
-				test = extent.createTest("TC-20-View Hash Key")
+				test = extent.createTest("TC-23-View Hash Key")
 						.pass(MarkupHelper.createLabel("Hash Key has been viewing.", ExtentColor.GREEN));
 				test.pass(MarkupHelper.createLabel("Hash Key Screen has been viewed i.e  "+hashKey_,ExtentColor.GREEN));
+				String screenShotPath__ = capture(driver, "Hash key generated");
+				test.addScreenCaptureFromPath(screenShotPath__);
 				extent.flush();
 
 			} else {
-				test = extent.createTest("TC-21-Generate Hash Key")
+				test = extent.createTest("TC-23-Generate Hash Key")
 						.pass(MarkupHelper.createLabel("Hash Key has been generating.", ExtentColor.GREEN));
 				test.pass(MarkupHelper.createLabel("Hash Key Screen has been generated", ExtentColor.GREEN));
 				extent.flush();
@@ -214,13 +226,14 @@ public class TC05_accountSettings extends TC01_merchantLogin {
 			driver.switchTo().defaultContent();
 			accSettngs_.clickAccountSettings.click();
 			accSettngs_.openPublicKeyScreen.click();
-			test = extent.createTest("TC-21-Open Public Key Configuration Screen ")
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			test = extent.createTest("TC-24-Open Public Key Configuration Screen ")
 					.pass(MarkupHelper.createLabel("Public Key Configuration screen has been opening.", ExtentColor.GREEN));
 			test.pass(MarkupHelper.createLabel("Public Key Configuration Screen has been Opened", ExtentColor.GREEN));
 			extent.flush();
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("TC-21-Open Generate Hash Key Screen ")
+			extent.createTest("TC-24-Open Generate Hash Key Screen ")
 					.fail(MarkupHelper.createLabel("Public Key Configuration Screen has not been Opened", ExtentColor.RED));
 			extent.flush();
 		}
@@ -233,13 +246,15 @@ public class TC05_accountSettings extends TC01_merchantLogin {
 			driver.switchTo().frame("applicationContent");
 			accSettngs_.openDownloadPublicKeyScreen.click();
 			accSettngs_.downloadPublicKey.click();
-			test = extent.createTest("TC-22-Download Public Key ")
+			test = extent.createTest("TC-25-Download Public Key ")
 					.pass(MarkupHelper.createLabel("Public Key has been downloading.", ExtentColor.GREEN));
 			test.pass(MarkupHelper.createLabel("Public Key Configuration Screen has been Downloaded", ExtentColor.GREEN));
+			String screenShotPath__ = capture(driver, "Downloaded public key");
+			test.addScreenCaptureFromPath(screenShotPath__);
 			extent.flush();
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("TC-22-Download Public Key ")
+			extent.createTest("TC-25-Download Public Key ")
 					.fail(MarkupHelper.createLabel("Public Key Configuration Screen has not been Downloaded", ExtentColor.RED));
 			extent.flush();
 		}
@@ -252,13 +267,15 @@ public class TC05_accountSettings extends TC01_merchantLogin {
 			driver.switchTo().frame("applicationContent");
 			accSettngs_.uploadPublicKeyFile.sendKeys(property.getProperty("publicKey_Location"));
 			accSettngs_.uploadPublicKey.click();
-			test = extent.createTest("TC-23-Upload Public Key ")
+			test = extent.createTest("TC-26-Upload Public Key ")
 					.pass(MarkupHelper.createLabel("Public Key has been uploading.", ExtentColor.GREEN));
 			test.pass(MarkupHelper.createLabel("Public Key Configuration Screen has been Uploaded", ExtentColor.GREEN));
+			String screenShotPath__ = capture(driver, "Uploaded Public Key");
+			test.addScreenCaptureFromPath(screenShotPath__);
 			extent.flush();
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("TC-23-Upload Public Key ")
+			extent.createTest("TC-26-Upload Public Key ")
 					.fail(MarkupHelper.createLabel("Public Key Configuration Screen has not been Uploaded", ExtentColor.RED));
 			extent.flush();
 		}

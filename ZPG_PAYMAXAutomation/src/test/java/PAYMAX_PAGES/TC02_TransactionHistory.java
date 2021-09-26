@@ -43,25 +43,18 @@ public class TC02_TransactionHistory extends TC01_merchantLogin {
 			TrxHstry = PageFactory.initElements(driver, TC02_TransactionHistory.class);
 			driver.switchTo().defaultContent();
 			TrxHstry.clickTransactionHistoryTab.click();
-			test = extent.createTest("TC-5-Transaction History Screen ")
+			test = extent.createTest("TC-6-Transaction History Screen ")
 					.pass(MarkupHelper.createLabel("Transaction History Screen has been opening.", ExtentColor.GREEN));
 			test.pass(MarkupHelper.createLabel("Transaction History Screen has been Opened", ExtentColor.GREEN));
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("TC-5-Transaction History Screen ")
+			extent.createTest("TC-6-Transaction History Screen ")
 					.fail(MarkupHelper.createLabel("Transaction History Screen has not been Opened", ExtentColor.RED));
 			extent.flush();
 		}
 	}
 
-	public static String capture(WebDriver driver_, String screenShotName) throws IOException {
-		TakesScreenshot ts = (TakesScreenshot) driver;
-		File source = ts.getScreenshotAs(OutputType.FILE);
-		String dest = System.getProperty("user.dir") + "/ErrorScreenshots/" + screenShotName + ".png";
-		File destination = new File(dest);
-		FileUtils.copyFile(source, destination);
-		return dest;
-	}
+	
 
 	public void searchTransactionHistory() throws Throwable {
 		try {
@@ -71,14 +64,14 @@ public class TC02_TransactionHistory extends TC01_merchantLogin {
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			js.executeScript("window.scrollBy(0,1000)");
 			String screenShotPath = capture(driver, "Search Transaction History");
-			test = extent.createTest("TC-6-Search Transaction History")
+			test = extent.createTest("TC-7-Search Transaction History")
 					.pass(MarkupHelper.createLabel("Transaction History has been opening Search.", ExtentColor.GREEN));
 			test.pass(MarkupHelper.createLabel("Transaction History has been Searched", ExtentColor.GREEN));
 			test.addScreenCaptureFromPath(screenShotPath);
 			extent.flush();
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("TC-6-Search Transaction History")
+			extent.createTest("TC-7-Search Transaction History")
 					.fail(MarkupHelper.createLabel("Transaction History has not been Searched", ExtentColor.RED));
 			extent.flush();
 		}
@@ -92,7 +85,7 @@ public class TC02_TransactionHistory extends TC01_merchantLogin {
 			String screenShotPath = capture(driver, "Before Reset Screen");
 			test.addScreenCaptureFromPath(screenShotPath);
 			TrxHstry.resetTrxHstry.click();
-			test = extent.createTest("TC-7-RESET Transaction History Screen ")
+			test = extent.createTest("TC-8-RESET Transaction History Screen ")
 					.pass(MarkupHelper.createLabel("Transaction History Screen has been reseting.", ExtentColor.GREEN));
 			test.pass(MarkupHelper.createLabel("Transaction History Screen has been reset", ExtentColor.GREEN));
 			String screenShotPath_ = capture(driver, "After Reset Screen");
@@ -100,7 +93,7 @@ public class TC02_TransactionHistory extends TC01_merchantLogin {
 			extent.flush();
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("TC-7-RESET Transaction History Screen ")
+			extent.createTest("TC-8-RESET Transaction History Screen ")
 					.fail(MarkupHelper.createLabel("Transaction History Screen has not been reset", ExtentColor.RED));
 			extent.flush();
 		}
@@ -112,14 +105,14 @@ public class TC02_TransactionHistory extends TC01_merchantLogin {
 			driver.switchTo().frame("applicationContent");
 			TrxHstry.clickExport.click();
 			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-			test = extent.createTest("TC-8-Export Transaction History File")
+			test = extent.createTest("TC-9-Export Transaction History File")
 					.pass(MarkupHelper.createLabel("Transaction History File has been Exporting.", ExtentColor.GREEN));
-			test.pass(MarkupHelper.createLabel("Transaction History Screen has been Exported", ExtentColor.GREEN));
+			test.pass(MarkupHelper.createLabel("Transaction History File has been Exported", ExtentColor.GREEN));
 			extent.flush();
 		} catch (Exception e) {
 			System.out.println(e);
-			extent.createTest("TC-8-Export Transaction History File").fail(
-					MarkupHelper.createLabel("Transaction History Screen has not been Exported", ExtentColor.RED));
+			extent.createTest("TC-9-Export Transaction History File").fail(
+					MarkupHelper.createLabel("Transaction History File has not been Exported", ExtentColor.RED));
 			extent.flush();
 		}
 	}
