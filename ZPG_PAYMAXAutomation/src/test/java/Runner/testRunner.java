@@ -7,9 +7,9 @@ import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-features = "src/test/resources/Features"
-,glue= {"PAYMAX_Test"}
-,tags= {"@uploadPublicKeyConfiguration"}
+features = "src/test/resources/adminFeatures"
+,glue= {"adminPAYMAX_Test"}
+,tags= {"@deactivate/ActicateUser"}
 )
 public class testRunner {
 
