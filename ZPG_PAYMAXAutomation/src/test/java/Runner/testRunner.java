@@ -9,7 +9,7 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(
 features = "src/test/resources/adminFeatures"
 ,glue= {"adminPAYMAX_Test"}
-,tags= {"@deactivate/ActicateUser"}
+,tags= {"@editUser"}
 )
 public class testRunner {
 

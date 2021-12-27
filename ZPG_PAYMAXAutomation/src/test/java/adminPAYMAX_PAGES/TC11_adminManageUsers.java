@@ -68,6 +68,15 @@ public class TC11_adminManageUsers extends TC10_adminLogin {
 	@FindBy(how = How.ID, using = "manageUsersForm:usersTable:0:j_id603732948_23fc3ebd")
 	public WebElement clickYesActiviate;
 
+	@FindBy(how = How.XPATH, xpath = "/html/body/div/div[2]/div[4]/div/div/form/table/tbody[1]/tr[2]/td[6]/div/a[1]")
+	public WebElement clickEditUserButton;
+
+	@FindBy(how = How.ID, using = "manageUserAccountForm:firstName")
+	public WebElement editUserFirstName;
+	
+	@FindBy(how = How.ID, using = "manageUserAccountForm:j_id1410192371_540dd1a5")
+	public WebElement clickUpdateUserBtm;
+
 	public void clickManageUser() throws Throwable {
 		try {
 			admindriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -163,6 +172,20 @@ public class TC11_adminManageUsers extends TC10_adminLogin {
 			manageUser.clickActiviate.click();
 			admindriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			manageUser.clickYesActiviate.click();
+		} catch (Exception e) {
+
+		}
+	}
+
+	public void editUser() throws Throwable {
+		try {
+			admindriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+			admindriver.switchTo().frame("applicationContent");
+			manageUser.clickEditUserButton.click();
+			admindriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			manageUser.editUserFirstName.clear();
+			manageUser.editUserFirstName.sendKeys("Testing");
+			manageUser.clickUpdateUserBtm.click();
 		} catch (Exception e) {
 
 		}

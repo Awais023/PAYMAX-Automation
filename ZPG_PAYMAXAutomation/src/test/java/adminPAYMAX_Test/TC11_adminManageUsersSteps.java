@@ -24,7 +24,8 @@ public class TC11_adminManageUsersSteps {
 	}
 
 	@Then("^Admin navigates to Manage user screen and click deactivate button\\. User must be deactivated\\.$")
-	public void admin_navigates_to_Manage_user_screen_and_click_deactivate_button_User_must_be_deactivated() throws Throwable {
+	public void admin_navigates_to_Manage_user_screen_and_click_deactivate_button_User_must_be_deactivated()
+			throws Throwable {
 		manageUsers.clickManageUser();
 		manageUsers.deactivateUser();
 	}
@@ -34,5 +35,12 @@ public class TC11_adminManageUsersSteps {
 		manageUsers.activateUser();
 	}
 
+	@Then("^Admin clicks on edit button and edit as per requirement and click save\\. User must be edited\\.$")
+	public void admin_clicks_on_edit_button_and_edit_as_per_requirement_and_click_save_User_must_be_edited()
+			throws Throwable {
+		manageUsers.clickManageUser();
+		manageUsers.editUser();
+
+	}
 
 }

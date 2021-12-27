@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +19,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -47,6 +50,9 @@ public class TC10_adminLogin {
 
 	@FindBy(how = How.ID, using = "errorMessages_body")
 	public WebElement adminErrorMsg;
+
+	@FindBy(how = How.ID, using = "easyPaisaLogo")
+	public WebElement managerUsers;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static ExtentSparkReporter spark;
@@ -164,7 +170,8 @@ public class TC10_adminLogin {
 			if (emailValidation(property_.getProperty("adminUserName"))) {
 				admindriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 				login_.adminLogin.click();
-				admindriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+				WebDriverWait wait2 = new WebDriverWait(admindriver, 30);
+				wait2.until(ExpectedConditions.visibilityOfElementLocated(By.id("form:MANAGEUSERS")));	
 				admindriver.switchTo().frame("applicationContent");
 				String screenShotPath = capture(admindriver, "Admin Login");
 				String welcome = login_.adminWelcomeMsg.getText();
